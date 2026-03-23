@@ -1,3 +1,5 @@
+
+
 name: Run Java Git Diff By Local
 
 on:
@@ -7,6 +9,9 @@ on:
   pull_request:
     branches:  # 修正拼写错误 braches -> branches
       - main
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   build-and-run:
