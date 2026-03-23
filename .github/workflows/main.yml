@@ -26,8 +26,7 @@ jobs:
 
       - name: Run java code  # 修正格式：name后加冒号，Run -> Run java code 补全格式
         run: |  # 使用 | 来执行多行命令
-          # 修正路径分隔符：Windows的\ 改为 Linux的/
-          cd openai-code-review-learn/openai-code-review-sdk/src/main/java
+          cd openai-code-review-sdk/src/main/java
           # 确保编译路径正确，指定输出目录（避免类文件散列）
           javac -d . com/zdx/ai/sdk/OpenAiCodeReview.java
           # 修正Java大小写：Java -> java
