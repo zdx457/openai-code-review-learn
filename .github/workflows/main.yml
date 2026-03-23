@@ -1,13 +1,11 @@
-# 工作流名称
 name: Run Java Git Diff By Local
 
-# 触发条件：main分支的push和pull request
 on:
   push:
     branches:
       - main
-  pull_request:  # 你原拼写错误：braches → branches
-    branches:
+  pull_request:
+    branches:  # 修正拼写错误 braches -> branches
       - main
 
 jobs:
@@ -15,25 +13,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. 检出代码（修复缩进、拼写错误）
-      - name: Checkout repository  # 你原缺少空格：-name → - name
-        uses: actions/checkout@v4  # 建议升级到v4，v2也可用
+      - name: Checkout repository  # 修正格式：-和name之间加空格
+        uses: actions/checkout@v4  # 升级到最新稳定版 v4
         with: 
-          fetch-depth: 2  # 获取最近2次提交，用于diff
+          fetch-depth: 2
 
-      # 2. 配置JDK 11（修复action名称、缩进错误）
-      - name: Set up JDK 11  # 你原缺少空格：-name → - name
-        uses: actions/setup-java@v4  # 你原拼写错误：users → uses
+      - name: Set up JDK 11  # 修正格式：-和name之间加空格
+        uses: actions/setup-java@v4  # 修正拼写错误 users -> uses，升级到 v4
         with: 
           distribution: 'temurin'
           java-version: '11'
 
-      # 3. 编译并运行Java代码（修复语法、路径、命令错误）
-      - name: Run java code  # 你原缺少冒号：name Run → name: Run
-        run: |  # 多行命令必须用 | 包裹
-          # 切换到Java源码目录（Linux用/，不是\）
+      - name: Run java code  # 修正格式：name后加冒号，Run -> Run java code 补全格式
+        run: |  # 使用 | 来执行多行命令
+          # 修正路径分隔符：Windows的\ 改为 Linux的/
           cd openai-code-review-learn/openai-code-review-sdk/src/main/java
-          # 编译Java文件（指定编码，避免中文乱码；指定输出目录）
-          javac -encoding UTF-8 -d ./target com/zdx/ai/sdk/OpenAiCodeReview.java
-          # 运行编译后的类（注意大小写：Java → java；指定classpath）
-          java -cp ./target com.zdx.ai.sdk.OpenAiCodeReview
+          # 确保编译路径正确，指定输出目录（避免类文件散列）
+          javac -d . com/zdx/ai/sdk/OpenAiCodeReview.java
+          # 修正Java大小写：Java -> java
+          java com.zdx.ai.sdk.OpenAiCodeReview
+        # 添加错误处理：如果命令失败，立即终止工作流
+        shell: bash
