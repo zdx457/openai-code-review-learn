@@ -3,10 +3,10 @@ name: Build and Run OpenAiCodeReview By Main Maven Jar
 on:
   push:
     branches:
-      - *
+      - '*'
   pull_request:
     branches:
-      - *
+      - '*'
 
 jobs:
   build:
@@ -24,7 +24,7 @@ jobs:
           distribution: 'adopt'
 
       - name: Build with Maven
-        run: mvn clean package
+        run: mvn clean install
 
       - name: Copy openai-code-review-sdk JAR
         run: mvn dependency:copy -Dartifact=com.zdx.ai:openai-code-review-sdk:1.0 -DoutputDirectory=./libs

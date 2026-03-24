@@ -10,8 +10,6 @@
     </parent>
 
     <artifactId>openai-code-review-sdk</artifactId>
-
-
     <packaging>jar</packaging>
 
     <properties>
