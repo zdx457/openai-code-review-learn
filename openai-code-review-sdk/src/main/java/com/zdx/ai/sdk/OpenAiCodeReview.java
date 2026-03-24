@@ -1,6 +1,7 @@
 package com.zdx.ai.sdk;
 
 import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import com.zdx.ai.sdk.types.utils.BearerTokenUtils;
 
@@ -32,9 +33,9 @@ public class OpenAiCodeReview {
         System.out.println("Exit with code: " + exitCode);
         System.out.println("diff code"+diffCode.toString());
 
-
         // 2. chatglm 代码评审
         String log = codeReview(diffCode.toString());
+//        String log = codeReview("1+1");
         System.out.println("log: "+log);
 
     }
@@ -51,21 +52,22 @@ public class OpenAiCodeReview {
         connection.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)");
         connection.setDoOutput(true);
 
-        String code = "1+1";
+        // 用 JSONObject 自动构建 JSON，不会出错！
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("model", "glm-4-flash");
 
-        String jsonInpuString = "{"
-                + "\"model\":\"glm-4-flash\","
-                + "\"messages\": ["
-                + "    {"
-                + "        \"role\": \"user\","
-                + "        \"content\": \"你是一个高级编程架构师，精通各类场景方案、架构设计和编程语言请，请您根据git diff记录，对代码做出评审。代码为: " + code + "\""
-                + "    }"
-                + "]"
-                + "}";
+        JSONArray messages = new JSONArray();
+        JSONObject msg = new JSONObject();
+        msg.put("role", "user");
+        msg.put("content", "你是一个高级编程架构师，请根据git diff记录，严格评审代码。git diff内容：" + diffCode);
+        messages.add(msg);
+
+        requestBody.put("messages", messages);
+        String jsonInputString = requestBody.toJSONString();
 
 
         try (OutputStream os = connection.getOutputStream()) {
-            byte[] input = jsonInpuString.getBytes(StandardCharsets.UTF_8);
+            byte[] input = jsonInputString.getBytes(StandardCharsets.UTF_8);
             os.write(input);
         }
 
@@ -95,7 +97,9 @@ public class OpenAiCodeReview {
 
         System.out.println("\n===== AI 代码评审结果 =====");
 //        System.out.println(reviewContent);
-        return  reviewContent;
+
+
+        return reviewContent;
 
     }
 }
