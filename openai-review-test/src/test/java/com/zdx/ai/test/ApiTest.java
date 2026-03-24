@@ -6,18 +6,16 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-/**
- * @author zdx
- * @description
- * @create 2026-03-23 22:42
- */
 @Slf4j
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class ApiTest {
     @Test
-    public static void main(String[] args) {
-        System.out.println("aaa");
+    public void test() {
+        System.out.println("aaa1");
+        System.out.println("aaa2");
+        System.out.println("aaa3");
+
 
     }
 }
