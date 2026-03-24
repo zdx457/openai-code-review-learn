@@ -13,4 +13,4 @@ curl -X POST \
               }
           ]
         }' \
-  https://open.bigmodel.cn/api/paas/v4
+  URL url = new URL("https://open.bigmodel.cn/api/paas/v4/chat/completions");

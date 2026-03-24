@@ -42,7 +42,7 @@ public class OpenAiCodeReview {
     private static String codeReview(String diffCode) throws Exception {
         String apiKeyScret = "68eed0df5cfa49798d1430eed248f1c3.RAHA1k881OEjDIms";
         String token = BearerTokenUtils.getToken(apiKeyScret);
-        URL url = new URL("https://open.bigmodel.cn/api/paas/v4");
+        URL url = new URL("https://open.bigmodel.cn/api/paas/v4/chat/completions");
 
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("POST");
@@ -51,14 +51,14 @@ public class OpenAiCodeReview {
         connection.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)");
         connection.setDoOutput(true);
 
-
+        String code = "1+1";
 
         String jsonInpuString = "{"
                 + "\"model\":\"glm-4-flash\","
                 + "\"messages\": ["
                 + "    {"
                 + "        \"role\": \"user\","
-                + "        \"content\": \"你是一个高级编程架构师，精通各类场景方案、架构设计和编程语言请，请您根据git diff记录，对代码做出评审。代码为: " + diffCode + "\""
+                + "        \"content\": \"你是一个高级编程架构师，精通各类场景方案、架构设计和编程语言请，请您根据git diff记录，对代码做出评审。代码为: " + code + "\""
                 + "    }"
                 + "]"
                 + "}";
@@ -95,9 +95,7 @@ public class OpenAiCodeReview {
 
         System.out.println("\n===== AI 代码评审结果 =====");
 //        System.out.println(reviewContent);
-
-
-        return reviewContent;
+        return  reviewContent;
 
     }
 }

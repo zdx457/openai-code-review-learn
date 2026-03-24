@@ -14,8 +14,8 @@ import java.nio.charset.StandardCharsets;
 
 public class ApiTest {
     public static void main(String[] args) {
-        String apiKeyScret = "68eed0df5cfa49798d1430eed248f1c3.RAHA1k881OEjDIms";
-        String token = BearerTokenUtils.getToken(apiKeyScret);
+        String apiKeySecret = "68eed0df5cfa49798d1430eed248f1c3.RAHA1k881OEjDIms";
+        String token = BearerTokenUtils.getToken(apiKeySecret);
         System.out.println(token);
     }
     @Test
