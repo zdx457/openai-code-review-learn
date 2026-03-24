@@ -42,7 +42,7 @@ public class OpenAiCodeReview {
     private static String codeReview(String diffCode) throws Exception {
         String apiKeyScret = "68eed0df5cfa49798d1430eed248f1c3.RAHA1k881OEjDIms";
         String token = BearerTokenUtils.getToken(apiKeyScret);
-        URL url = new URL("https://open.bigmodel.cn/api/paas/v4/chat/completions");
+        URL url = new URL("https://open.bigmodel.cn/api/paas/v4");
 
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("POST");
