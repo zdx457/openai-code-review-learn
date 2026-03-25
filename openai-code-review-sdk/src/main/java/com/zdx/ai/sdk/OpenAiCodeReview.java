@@ -49,6 +49,7 @@ public class OpenAiCodeReview {
 
         // 3. 写入评审日志
         writeLog(token, log);
+        System.out.println("write log: "+log);
 
     }
 
