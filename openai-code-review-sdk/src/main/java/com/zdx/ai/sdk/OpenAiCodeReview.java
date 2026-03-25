@@ -125,10 +125,11 @@ public class OpenAiCodeReview {
                 .setCredentialsProvider(new UsernamePasswordCredentialsProvider(token, ""))
                 .call();
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         sdf.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
         String dateFolderName = sdf.format(new Date());
-//        String dateFolderName = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+
         File dateFolder = new File("repo/" + dateFolderName);
         if(!dateFolder.exists()){
             dateFolder.mkdir();
