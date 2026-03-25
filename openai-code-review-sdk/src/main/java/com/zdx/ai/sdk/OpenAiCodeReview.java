@@ -4,19 +4,26 @@ import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import com.zdx.ai.sdk.types.utils.BearerTokenUtils;
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Random;
 
 public class OpenAiCodeReview {
     public static void main(String[] args) throws Exception { // 本文件用于gitHub的actions来执行的文件
-        System.out.println("测试执行");
+        System.out.println("openai 代码评审，测试执行");
 
+        // 获取 github token
+        String token = System.getenv("GITHUB_TOKEN");
+        if(token == null||token.isEmpty()){
+            throw new RuntimeException("token is null");
+        }
         // 1.代码检出
 
         ProcessBuilder processBuilder = new ProcessBuilder("git", "diff", "HEAD~1","HEAD");
@@ -37,6 +44,9 @@ public class OpenAiCodeReview {
         String log = codeReview(diffCode.toString());
 //        String log = codeReview("1+1");
         System.out.println("log: "+log);
+
+        // 3. 写入评审日志
+        writeLog(token, log);
 
     }
 
@@ -101,5 +111,41 @@ public class OpenAiCodeReview {
 
         return reviewContent;
 
+    }
+
+    private static String writeLog(String token, String log) throws Exception {
+//        https://github.com/zdx457/log.git
+        Git git = Git.cloneRepository()
+                .setURI("https://github.com/zdx457/log")
+                .setDirectory(new File("repo"))
+                .setCredentialsProvider(new UsernamePasswordCredentialsProvider(token, ""))
+                .call();
+
+
+        String dateFolderName = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+        File dateFolder = new File("repo/" + dateFolderName);
+        if(!dateFolder.exists()){
+            dateFolder.mkdir();
+        }
+        String filename = generateRandomString(12)+".md";
+        File newFile = new File(dateFolder, filename);
+        try(FileWriter writer = new FileWriter(newFile)) {
+            writer.write(log);
+        }
+        git.add().addFilepattern(dateFolderName+"/"+filename).call();
+        git.commit().setMessage("ADD new file").call();
+        git.push().setCredentialsProvider(new UsernamePasswordCredentialsProvider(token, "")).call();
+
+        return "https://github.com/zdx457/log/blob/master/"+dateFolderName+"/"+filename;
+    }
+
+    private static String generateRandomString(int length) {
+        String charachers =  "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        Random random = new Random();
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < length; i++) {
+            sb.append(charachers.charAt(random.nextInt(charachers.length())));
+        }
+        return sb.toString();
     }
 }
