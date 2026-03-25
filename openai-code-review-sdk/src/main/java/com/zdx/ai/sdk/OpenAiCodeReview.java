@@ -14,6 +14,7 @@ import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
+import java.util.TimeZone;
 
 public class OpenAiCodeReview {
     public static void main(String[] args) throws Exception { // 本文件用于gitHub的actions来执行的文件
@@ -124,8 +125,10 @@ public class OpenAiCodeReview {
                 .setCredentialsProvider(new UsernamePasswordCredentialsProvider(token, ""))
                 .call();
 
-
-        String dateFolderName = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
+        String dateFolderName = sdf.format(new Date());
+//        String dateFolderName = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         File dateFolder = new File("repo/" + dateFolderName);
         if(!dateFolder.exists()){
             dateFolder.mkdir();
