@@ -20,7 +20,9 @@ public class OpenAiCodeReview {
         System.out.println("openai 代码评审，测试执行");
 
         // 获取 github token
-//        String token = System.getenv("GITHUB_TOKEN");
+        String token = System.getenv("GITHUB_TOKEN");
+        System.out.println(token);
+        System.out.println(token.length());
 //        if(token == null||token.isEmpty()){
 //            throw new RuntimeException("token is null");
 //        }
