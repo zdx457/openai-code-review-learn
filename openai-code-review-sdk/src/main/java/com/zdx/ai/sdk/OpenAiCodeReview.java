@@ -21,11 +21,11 @@ public class OpenAiCodeReview {
 
         // 获取 github token
         String token = System.getenv("GITHUB_TOKEN");
-        System.out.println(token);
-        System.out.println(token.length());
-//        if(token == null||token.isEmpty()){
-//            throw new RuntimeException("token is null");
-//        }
+//        System.out.println(token);
+//        System.out.println(token.length());
+        if(token == null||token.isEmpty()){
+            throw new RuntimeException("token is null");
+        }
         // 1.代码检出
 
         ProcessBuilder processBuilder = new ProcessBuilder("git", "diff", "HEAD~1","HEAD");
@@ -48,7 +48,7 @@ public class OpenAiCodeReview {
         System.out.println("log: "+log);
 
         // 3. 写入评审日志
-//        writeLog(token, log);
+        writeLog(token, log);
 
     }
 
