@@ -20,10 +20,10 @@ public class OpenAiCodeReview {
         System.out.println("openai 代码评审，测试执行");
 
         // 获取 github token
-        String token = System.getenv("GITHUB_TOKEN");
-        if(token == null||token.isEmpty()){
-            throw new RuntimeException("token is null");
-        }
+//        String token = System.getenv("GITHUB_TOKEN");
+//        if(token == null||token.isEmpty()){
+//            throw new RuntimeException("token is null");
+//        }
         // 1.代码检出
 
         ProcessBuilder processBuilder = new ProcessBuilder("git", "diff", "HEAD~1","HEAD");
@@ -46,7 +46,7 @@ public class OpenAiCodeReview {
         System.out.println("log: "+log);
 
         // 3. 写入评审日志
-        writeLog(token, log);
+//        writeLog(token, log);
 
     }
 
