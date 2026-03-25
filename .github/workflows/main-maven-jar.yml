@@ -26,8 +26,8 @@ jobs:
       - name: Build with Maven
         run: mvn clean install
 
-      - name: Copy openai-code-review-sdk JAR
-        run: mvn dependency:copy -Dartifact=com.zdx.ai:openai-code-review-sdk:1.0 -DoutputDirectory=./libs
+#      - name: Copy openai-code-review-sdk JAR
+#        run: mvn dependency:copy -Dartifact=com.zdx.ai:openai-code-review-sdk:1.0 -DoutputDirectory=./libs
 
 #      - name: Debug token length
 #        run: echo "GITHUB_TOKEN length: ${#GITHUB_TOKEN}"
@@ -35,8 +35,13 @@ jobs:
 #          GITHUB_TOKEN: ${{ secrets.CODE_TOKEN }
 
 
+#      - name: Run Code Review
+#        run: java -jar ./libs/openai-code-review-sdk-1.0.jar
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.CODE_TOKEN }}
+
       - name: Run Code Review
-        run: java -jar ./libs/openai-code-review-sdk-1.0.jar
+        run: java -jar openai-code-review-sdk/target/openai-code-review-sdk-1.0.jar
         env:
           GITHUB_TOKEN: ${{ secrets.CODE_TOKEN }}
 
