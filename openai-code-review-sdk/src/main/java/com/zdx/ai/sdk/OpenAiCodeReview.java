@@ -139,7 +139,7 @@ public class OpenAiCodeReview {
         git.commit().setMessage("ADD new file").call();
         git.push().setCredentialsProvider(new UsernamePasswordCredentialsProvider(token, "")).call();
 
-        return "https://github.com/zdx457/log/blob/master/"+dateFolderName+"/"+filename+".md";
+        return "https://github.com/zdx457/log/blob/master/"+dateFolderName+"/"+filename;
     }
 
     private static String generateRandomString(int length) {
