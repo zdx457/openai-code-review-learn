@@ -32,9 +32,10 @@ jobs:
 #      - name: Debug token length
 #        run: echo "GITHUB_TOKEN length: ${#GITHUB_TOKEN}"
 #        env:
-#          GITHUB_TOKEN: ${{ secrets.CODE_TOKEN }}
+#          GITHUB_TOKEN: ${{ secrets.CODE_TOKEN }
 
-      - name: Run code Review
+
+      - name: Run Code Review
         run: java -jar ./libs/openai-code-review-sdk-1.0.jar
         env:
           GITHUB_TOKEN: ${{ secrets.CODE_TOKEN }}
