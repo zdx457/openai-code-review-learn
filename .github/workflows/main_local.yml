@@ -1,14 +1,12 @@
-
-
 name: Run Java Git Diff By Local
 
 on:
   push:
     branches:
-      - main
+      - 260324-zdx-chatglm-review
   pull_request:
     branches:  # 修正拼写错误 braches -> branches
-      - main
+      - 260324-zdx-chatglm-review
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
