@@ -48,8 +48,8 @@ public class OpenAiCodeReview {
         System.out.println("log: "+log);
 
         // 3. 写入评审日志
-        writeLog(token, log);
-        System.out.println("write log: "+log);
+        String logUrl = writeLog(token, log);
+        System.out.println("write log: "+logUrl);
 
     }
 
@@ -139,7 +139,7 @@ public class OpenAiCodeReview {
         git.commit().setMessage("ADD new file").call();
         git.push().setCredentialsProvider(new UsernamePasswordCredentialsProvider(token, "")).call();
 
-        return "https://github.com/zdx457/log/blob/master/"+dateFolderName+"/"+filename;
+        return "https://github.com/zdx457/log/blob/master/"+dateFolderName+"/"+filename+".md";
     }
 
     private static String generateRandomString(int length) {
