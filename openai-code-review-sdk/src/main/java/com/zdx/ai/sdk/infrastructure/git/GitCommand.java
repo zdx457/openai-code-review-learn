@@ -43,7 +43,7 @@ public class GitCommand {
         logProcess.waitFor();
 
 
-        ProcessBuilder diffProcessBuilder = new ProcessBuilder("git","log","-1","--pretty=format:%H"); // git命令
+        ProcessBuilder diffProcessBuilder = new ProcessBuilder("git", "diff", latestCommitHash + "^", latestCommitHash);
         diffProcessBuilder.directory(new File("."));
         Process diffProcess = diffProcessBuilder.start();
 
