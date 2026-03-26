@@ -4,8 +4,10 @@ import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import com.zdx.ai.sdk.types.utils.BearerTokenUtils;
+import com.zdx.ai.sdk.types.utils.WXAccessTokenUtils;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
+import com.zdx.ai.sdk.domain.model.Message;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -14,6 +16,7 @@ import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
+import java.util.Scanner;
 import java.util.TimeZone;
 
 public class OpenAiCodeReview {
@@ -52,6 +55,47 @@ public class OpenAiCodeReview {
         String logUrl = writeLog(token, log);
         System.out.println("write log: "+logUrl);
 
+        // 4.消息通知
+        System.out.println("pushMessage: "+logUrl);
+        pushMessage(logUrl);
+
+
+    }
+    private static void pushMessage(String logUrl)throws Exception{
+        String accessToken = WXAccessTokenUtils.getAccessToken();
+        System.out.println(accessToken);
+
+
+        // 创建消息
+        Message message = new Message();
+        message.put("project","big-market");
+        message.put("review","feat: 新加功能");
+
+        String url = String.format("https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=%s", accessToken);
+        sendPostRequest(url, JSON.toJSONString(message));
+    }
+
+    private static void sendPostRequest(String urlString, String jsonBody) {
+        try {
+            URL url = new URL(urlString);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/json; utf-8");
+            conn.setRequestProperty("Accept", "application/json");
+            conn.setDoOutput(true);
+
+            try (OutputStream os = conn.getOutputStream()) {
+                byte[] input = jsonBody.getBytes(StandardCharsets.UTF_8);
+                os.write(input, 0, input.length);
+            }
+
+            try (Scanner scanner = new Scanner(conn.getInputStream(), StandardCharsets.UTF_8.name())) {
+                String response = scanner.useDelimiter("\\A").next();
+                System.out.println(response);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private static String codeReview(String diffCode) throws Exception {
