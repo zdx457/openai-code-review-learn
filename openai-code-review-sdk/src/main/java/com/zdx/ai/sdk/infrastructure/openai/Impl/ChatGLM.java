@@ -30,6 +30,15 @@ public class ChatGLM implements IOpenAI {
         // 1. 生成 ChatGLM 鉴权 token
         String token = BearerTokenUtils.getToken(apiKeySecret);
 
+        // ====================== 加在这里！======================
+        System.out.println("===== 打印 API 地址 =====");
+        System.out.println(apiHost);
+
+        System.out.println("===== 打印请求 JSON =====");
+        String json = JSON.toJSONString(requestDTO);
+        System.out.println(json);
+        // ======================================================
+
         // 2. 创建 HTTP 连接
         URL url = new URL(apiHost);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
