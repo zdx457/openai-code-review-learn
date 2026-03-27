@@ -29,6 +29,7 @@ public abstract class AbstractOpenAiCodeReviewService implements IOpenAiCodeRevi
         try {
             // 1. 获取提交代码
             String diffCode = getDiffCode();
+            System.out.println("差异"+diffCode);
             // 2. 开始评审代码
             String recommend = codeReview(diffCode);
             // 3. 记录评审结果；返回日志地址
