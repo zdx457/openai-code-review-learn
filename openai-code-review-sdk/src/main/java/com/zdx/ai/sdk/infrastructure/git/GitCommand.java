@@ -48,7 +48,7 @@ public class GitCommand {
         Process diffProcess = diffProcessBuilder.start();
 
         StringBuilder diffCode = new StringBuilder();
-        BufferedReader diffReader = new BufferedReader(new InputStreamReader(logProcess.getErrorStream()));
+        BufferedReader diffReader = new BufferedReader(new InputStreamReader(logProcess.getInputStream()));
         String line;
         while((line=diffReader.readLine())!=null){
             diffCode.append(line).append("\n");
