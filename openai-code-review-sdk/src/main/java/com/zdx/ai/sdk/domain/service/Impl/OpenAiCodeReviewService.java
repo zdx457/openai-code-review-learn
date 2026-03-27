@@ -63,7 +63,12 @@ public class OpenAiCodeReviewService extends AbstractOpenAiCodeReviewService {
                         "#### \uD83D\uDCBB修改后的代码：\n" +
                         "{变量4}\n" +
                         "`;代码如下:"));
-                add(new ChatCompletionRequestDTO.Prompt("user", diffCode));
+                // ====================== 修复空diff ======================
+                String validCode = diffCode == null || diffCode.trim().isEmpty()
+                        ? "本次提交无代码变更，仅更新信息或空提交"
+                        : diffCode;
+                add(new ChatCompletionRequestDTO.Prompt("user", validCode));
+                // ======================================================
             }
         });
 
