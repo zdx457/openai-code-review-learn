@@ -24,7 +24,7 @@ public class OpenAiCodeReview {
     private String chatglm_apiKeySecret = "";
 
     // Github 配置
-    private String github_review_log_uri;
+    private String code_review_log_uri;
     private String github_token;
 
     // 工程配置 - 自动获取
