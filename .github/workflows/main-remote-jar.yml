@@ -3,10 +3,10 @@ name: Build and Run OpenAiCodeReview By Main Maven Jar
 on:
   push:
     branches:
-      - main-close
+      - main -close
   pull_request:
     branches:
-      - main-close
+      - main -close
 
 jobs:
   build:
@@ -23,11 +23,13 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
 
-      - name: Build with Maven
-        run: mvn clean install
+      - name: Create libs directory
+        run: mkdir -p ./libs
 
-      - name: Copy openai-code-review-sdk JAR
-        run: mvn dependency:copy -Dartifact=com.zdx.ai:openai-code-review-sdk:1.0 -DoutputDirectory=./libs
+      # 下载 jar 包记得 https 网址和版本号
+      - name: Download openai-code-review-sdk JAR
+        run: wget -0 ./libs/openai-code-review https://github.com/zdx457/openai-code-review-learn/releases/tag/v1.0/openai-code-review-sdk-1.0.jar
+
 
       - name: Get repository name
         id: repo-name
@@ -52,6 +54,7 @@ jobs:
           echo "Commit author is ${{ env.COMMIT_AUTHOR }}"
           echo "Commit message is ${{ env.COMMIT_MESSAGE }}"      
 
+      # 版本号
       - name: Run Code Review
         run: java -jar ./libs/openai-code-review-sdk-1.0.jar
         env:
