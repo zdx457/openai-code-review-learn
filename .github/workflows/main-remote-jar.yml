@@ -23,12 +23,12 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
 
-      - name: Create libs directory
-        run: mkdir -p ./libs
 
-      # 下载 jar 包记得 https 网址和版本号
+      # 下载 jar 包记得 https 网址和版本号，项目要公开
+      # https://github.com/zdx457/openai-code-review-learn/releases/download/v1.0/openai-code-review-sdk-1.0.jar
       - name: Download openai-code-review-sdk JAR
-        run: wget -O ./libs/openai-code-review-sdk-1.0.jar https://github.com/zdx457/openai-code-review-learn/releases/download/v1.0/openai-code-review-sdk-1.0.jar
+        run: mkdir -p ./libs
+             wget -O ./libs/openai-code-review-sdk-1.0.jar https://github.com/zdx457/openai-code-review-learn/releases/download/v1.0/openai-code-review-sdk-1.0.jar
 
 
       - name: Get repository name
