@@ -13,23 +13,7 @@ public class ApiTest {
     @Test
     public void test() {
         System.out.println("aaa1234");
-        System.out.println("aaa1235");
-        System.out.println("abc1235");
-        System.out.println("abc1236");
-        System.out.println("abc1236");
-        System.out.println("abc1236");
-        System.out.println("abc1236");
-        System.out.println("abc1236");
-        System.out.println("abc1236");
-        System.out.println("abc1236");
-        System.out.println("1111111");
-        System.out.println("1111111");
-        System.out.println("1111111");
-        System.out.println("1111111");
-        System.out.println("1111111");
-        System.out.println("1111111");
-        System.out.println("1111111");
-        System.out.println("1111111");
+
 
 
     }
